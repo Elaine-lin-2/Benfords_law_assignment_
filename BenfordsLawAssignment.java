@@ -5,132 +5,81 @@
 * Description: The program allows the user to read the file containing the total sales amount
 * and check the sales data for possible accounting fraud
 */
-import java.util.Scanner;
-import java.io.FileNotFoundException;
-import java.io.File;
 
-class BenfordsLawAssignment{
-    public static void main(String[]args){
+import java.util.Scanner;	//Library for the scanner
+import java.io.*;
 
-        Scanner reader = new Scanner(System.in);
-
-        String exitCondition, readFile, checkFraud, userInput;
-        exitCondition = "0";
-        readFile = "1";
-        checkFraud = "2";
-
-        do{
-            menu();
-            userInput = reader.nextLine(); 
-
-            if (userInput.equals(readFile)){       
-                System.out.println("readfile");
-                readFile();
-            }
-            else if (userInput.equals(checkFraud)){
-                System.out.println("checkfraud");
-            }
-
-            else if ((!userInput.equals(readFile)) && (!userInput.equals(checkFraud)) && (!userInput.equals(exitCondition))){
-                System.out.println("Please type in a valid option (number 0-2)");
-            }
-            
-            
-        } while (!userInput.equals(exitCondition));
+class BenLaw {
+    
+    public static void main(String[] args)
+    {
+    	Scanner reader = new Scanner(System.in);
+    
+    	int[] digitOccurrences = new int[10];
+    	boolean isThereFraud = false;
+    	
+    	do 
+    	{
+    		String userInput = "";
+        	
+        	while (!(userInput.equals("1") || userInput.equals("2")))
+    		{
+    			System.out.print("Press <1> to load the file, or press <2> to check for accounting fraud: ");
+        		userInput = reader.nextLine();
+    		}
+    		
+    		if (userInput.equals("1"))
+    		{
+    			digitOccurrences = LoadFile(digitOccurrences);
+    		}
+    		else
+    		{
+    			isThereFraud = CheckSalesData(digitOccurrences);
+    		}
+    		
+    	} while (true);
     }
-
-    public static void menu(){
-        System.out.println("Sales analysis system");
-        System.out.println("1 - read the file containing sales");
-        System.out.println("2 - check for possible accounting fraud");
-        System.out.println("0 - exit");
-    }
-
-    public static void readFile(){
+    
+    private static int[] LoadFile(int[] digitOccurrences)
+    {	
+    	for (int i = 0; i < digitOccurrences.length; i++){
+    		digitOccurrences[i] = 0;
+    	}
 
         String fileName = "sales.csv";
-        int len;
-        int totalLen =0;
-        int count1 =0, count2 =0, count3=0, count4=0, count5=0, count6=0, count7=0, count8=0, count9=0;
-
-        try{
+    	
+    	try
+    	{
             File spreadSheet = new File(fileName);
-            Scanner scnr = new Scanner(spreadSheet);
+            Scanner fileReader = new Scanner(spreadSheet);
 
-            scnr.nextLine();
-
-            while(scnr.hasNextLine()){
-                String line = scnr.nextLine();
-                len = line.length();
-                totalLen ++;
-
-                for(int i = 0; i< len; i++){
-                    
-                    //if statement to check for blank space
-                    if(line.charAt(i) == ','){
-                        
-                        char first = line.charAt(i+1);
-                        int num = Character.getNumericValue(first);
-                        //System.out.println(num + ", ");
-                    
-                        if(num==1){
-                            count1 ++;
-                        }
-                        else if(num==2){
-                            count2 ++;
-                        }
-                        else if(num==3){
-                            count3 ++;
-                        }
-                        else if(num==4){
-                            count4 ++;
-                        }
-                        else if(num==5){
-                            count5 ++;
-                        }
-                        else if(num==6){
-                            count6 ++;
-                        }
-                        else if(num==7){
-                            count7 ++;
-                        }
-                        else if(num==8){
-                            count8 ++;
-                        }
-                        else if(num==9){
-                            count9 ++;
-                        }
-                    }
-                }
-            }
-            double []numArray = {count1,count2, count3, count4, count5, count6, count7, count8, count9};
-
-            //System.out.println("%1: " + 1.0* count1*100/totalLen);
-            printArray(numArray);
-            digitFrequency(numArray, totalLen);
-
-        }
-        catch(FileNotFoundException e){
-            System.out.println(e);
-        }
+    		fileReader.useDelimiter(",");
+    		
+    		String fileLine = "";
+    		String firstDigitString = "";
+    		int firstDigitInt = 0;
+    		
+    		fileReader.nextLine();
+    		
+    		while(fileReader.hasNextLine() == true)       
+    		{
+    			fileLine = fileReader.nextLine();
+    			firstDigitString = fileLine.substring(fileLine.indexOf(",") + 1, fileLine.indexOf(",") + 2);
+    			
+    			firstDigitInt = Integer.parseInt(firstDigitString);
+    			
+    			digitOccurrences[firstDigitInt]++;
+    			digitOccurrences[0]++;
+    		}
+    	}
+    	catch(FileNotFoundException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	
+    	return digitOccurrences;
     }
-
-    public static void digitFrequency(double[]arr, int totalLen){
-
-        //needs to add up to 100
-        for(int i=0; i< arr.length; i++){
-            arr[i] = 1.0* arr[i]*100/totalLen;
-            System.out.println();
-            System.out.print(arr[i] + ", ");
-        }
-        
-    }
-
-    public static void printArray(double []arr){
-        for(int i=0; i< arr.length; i++){
-            System.out.print(arr[i]+ ", ");
-        }
-    }
+    
     private static boolean CheckSalesData(int[] digitOccurrences)
     {
     	double digitPercentage = 0;
@@ -166,6 +115,4 @@ class BenfordsLawAssignment{
     		return true;
     	}
     } 
-
- 
 }
