@@ -131,7 +131,41 @@ class BenfordsLawAssignment{
             System.out.print(arr[i]+ ", ");
         }
     }
-
+    private static boolean CheckSalesData(int[] digitOccurrences)
+    {
+    	double digitPercentage = 0;
+    	
+    	double frequencyOfDigitOne = 0;   
+    	
+    	
+    	for (int i = 1; i < digitOccurrences.length; i++)
+    	{
+    		System.out.println(i + " appeared " + digitOccurrences[i] + " times.");
+    	}
+    	
+    	
+    	for (int i = 1; i < digitOccurrences.length; i++)
+    	{	
+    		digitPercentage = Math.round(((double)(digitOccurrences[i])/(double)(digitOccurrences[0])) * 1000) / 10.0;
+    		System.out.println(i + " occurred " + digitPercentage + "% of the time.");
+    		
+    		if (i == 1)
+    		{
+    			frequencyOfDigitOne = digitPercentage;
+    		}
+    	}
+    	
+    	if (frequencyOfDigitOne >= 29 && frequencyOfDigitOne <= 32)
+    	{
+    		System.out.println("\nThere is no sales fraud detected.");
+    		return false;
+    	}
+    	else
+    	{
+    		System.out.println("\nSales fraud was detected.");
+    		return true;
+    	}
+    } 
 
  
 }
