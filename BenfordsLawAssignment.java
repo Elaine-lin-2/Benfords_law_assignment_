@@ -14,6 +14,8 @@ class BenfordsLawAssignment{
 
         Scanner reader = new Scanner(System.in);
 
+        //Defining the variables
+
         String exitCondition, readFile, checkFraud, userInput;
         exitCondition = "0";
         readFile = "1";
@@ -37,6 +39,8 @@ class BenfordsLawAssignment{
             
             
         } while (!userInput.equals(exitCondition));
+
+        reader.close();
     }
 
     public static void menu(){
