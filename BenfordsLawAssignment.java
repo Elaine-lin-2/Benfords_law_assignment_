@@ -10,7 +10,7 @@ import java.util.Scanner;	//Library for the scanner
 import java.io.*;
 import java.io.PrintWriter;
 
-class BenLaw {
+class BenLaw{
     
     public static void main(String[] args)
     {
@@ -49,27 +49,40 @@ class BenLaw {
         System.out.println("press <3> to print the results in a CSV file");
     }
 
-    public static int[] loadFile(int[] digitOccurrences)
-    {	
+    public static int[] loadFile(int[] digitOccurrences){	
+
     	for (int i = 0; i < digitOccurrences.length; i++){
     		digitOccurrences[i] = 0;
     	}
-
+		int len;
         String fileName = "sales.csv";
+		
     	
     	try{
 
             File spreadSheet = new File(fileName);
             Scanner fileReader = new Scanner(spreadSheet);
-
-    		fileReader.useDelimiter(",");
-    		
-    		String fileLine = "";
-    		String firstDigitString = "";
+			
     		int firstDigitInt = 0;
-    		
     		fileReader.nextLine();
     		
+			while(fileReader.hasNextLine()){
+                String line = fileReader.nextLine();
+                len = line.length();
+
+                for(int i = 0; i< len; i++){
+                    
+                    //if statement to check for comma
+                    if(line.charAt(i) == ','){
+                        char firstDigitString = line.charAt(i+1);
+                        firstDigitInt = Character.getNumericValue(firstDigitString);
+                    }
+                }
+				digitOccurrences[firstDigitInt]++;
+    			digitOccurrences[0]++;
+            }
+
+			/*
     		while(fileReader.hasNextLine() == true){
 
     			fileLine = fileReader.nextLine();
@@ -79,6 +92,7 @@ class BenLaw {
     			digitOccurrences[firstDigitInt]++;
     			digitOccurrences[0]++;
     		}
+			*/
     	}
 
     	catch(FileNotFoundException e){
