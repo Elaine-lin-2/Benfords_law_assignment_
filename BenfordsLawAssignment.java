@@ -103,11 +103,35 @@ class BenfordsLawAssignment{
                     }
                 }
             }
-            System.out.println("%1: " + 1.0* count1*100/totalLen);
+            double []numArray = {count1,count2, count3, count4, count5, count6, count7, count8, count9};
+
+            //System.out.println("%1: " + 1.0* count1*100/totalLen);
+            printArray(numArray);
+            digitFrequency(numArray, totalLen);
+
         }
         catch(FileNotFoundException e){
             System.out.println(e);
         }
     }
+
+    public static void digitFrequency(double[]arr, int totalLen){
+
+        //needs to add up to 100
+        for(int i=0; i< arr.length; i++){
+            arr[i] = 1.0* arr[i]*100/totalLen;
+            System.out.println();
+            System.out.print(arr[i] + ", ");
+        }
+        
+    }
+
+    public static void printArray(double []arr){
+        for(int i=0; i< arr.length; i++){
+            System.out.print(arr[i]+ ", ");
+        }
+    }
+
+    
  
 }
