@@ -12,64 +12,100 @@ import java.io.PrintWriter;
 
 class BenLaw{
     
-    public static void main(String[] args)
-    {
+    public static void main(String[] args){
+
     	Scanner reader = new Scanner(System.in);
     
+		//Generate new int-type array
     	int[] digitOccurrences = new int[10];
     	boolean isThereFraud = false;
     	
     	do{
     		String userInput = "";
         	
+			//Prints the menu
         	printMenu();
+
+			//prompts an option from user
             userInput = reader.nextLine();
-    		
+			
+    		//Executes the loadFile method
     		if (userInput.equals("1")){
     			digitOccurrences = loadFile(digitOccurrences);
                 System.out.println("Sales data has been loaded.");
+				
     		}
+
+			//Executes the checkSalesData method
     		else if(userInput.equals("2")){
     			isThereFraud = checkSalesData(digitOccurrences);
                 System.out.println(); // Spacing
     		}
+
+			//Executes the exportCSV method
             else if(userInput.equals("3")){
     			exportCSV(digitOccurrences);
     		}
+
+			//Detects invalid input; prompts re-input from the user
             else{
                 System.out.println("Please type in a valid option (A number from 0-3)");
             }
-    		
-    	} while (true);
+    	
+		
+		//Exit conditions
+    	} while (true);	
     }
     
+	/*
+	* Prints the menu
+	* 
+	* @param - no parameters
+	* @return - is void type method; does not return a value
+	* @Author - Krishna & Elaine
+	*/
+
     public static void printMenu(){
+
+		//Prints user options
         System.out.println("Press <1> to load the file");
         System.out.println("press <2> to check for accounting fraud");
         System.out.println("press <3> to print the results in a CSV file");
     }
 
+	/*
+	* Loads the sales.csv file
+	* 
+	* @param - int type array
+	* @return - the digit occurances of each number (1-9)
+	* @Author - Krishna & Elaine
+	*/
+
     public static int[] loadFile(int[] digitOccurrences){	
 
+		//Saves digit occurances
     	for (int i = 0; i < digitOccurrences.length; i++){
     		digitOccurrences[i] = 0;
     	}
+
+		//Define variables
 		int len;
         String fileName = "sales.csv";
 		
-    	
     	try{
 
+			//Opens and scans the CSV
             File spreadSheet = new File(fileName);
             Scanner fileReader = new Scanner(spreadSheet);
-			
     		int firstDigitInt = 0;
     		fileReader.nextLine();
-    		
+
+			//If there is a line after
 			while(fileReader.hasNextLine()){
                 String line = fileReader.nextLine();
-                len = line.length();
 
+				//Finds the length of each line
+                len = line.length();
                 for(int i = 0; i< len; i++){
                     
                     //if statement to check for comma
@@ -78,6 +114,7 @@ class BenLaw{
                         firstDigitInt = Character.getNumericValue(firstDigitString);
                     }
                 }
+				//
 				digitOccurrences[firstDigitInt]++;
     			digitOccurrences[0]++;
             }
@@ -94,16 +131,23 @@ class BenLaw{
     		}
 			*/
     	}
-
     	catch(FileNotFoundException e){
     		System.out.println(e);
     	}
-    	
     	return digitOccurrences;
     }
     
+	/*
+	* Checks and varifies the Sales Data
+	* 
+	* @param - int type array
+	* @return - the result of the validation (true /false statement)
+	* @Author - Krishna
+	*/
+
     public static boolean checkSalesData(int[] digitOccurrences){
     	
+		//Define variables
         double digitPercentage = 0;
     	double frequencyOfDigitOne = 0;   
     	
@@ -113,30 +157,42 @@ class BenLaw{
     	}
 		*/
 
-    	
+		//Iterates the array
     	for (int i = 1; i < digitOccurrences.length; i++){	
+
+			//Calculates the percentage
     		digitPercentage = Math.round(((double)(digitOccurrences[i])/(double)(digitOccurrences[0])) * 1000) / 10.0;
     		//System.out.println(i + " occurred " + digitPercentage + "% of the time.");
     		if (i == 1){
+
+				//
     			frequencyOfDigitOne = digitPercentage;
     		}
     	}
 		
-    	
+    	//Detects and checks for fraud 
     	if (frequencyOfDigitOne >= 29 && frequencyOfDigitOne <= 32){
 
-    		System.out.println("\nThere is no sales fraud detected.");
+    		System.out.println("There is no sales fraud detected.");
     		return false;
     	}
-
     	else{
-    		System.out.println("\nSales fraud was detected.");
+    		System.out.println("Sales fraud was detected.");
     		return true;
     	}
     }
 
+	/*
+	* Exports the digit occurances as a CSV
+	* 
+	* @param - int type array
+	* @return - void type method; does not return a value
+	* @Author - Elaine
+	*/
+
     public static void exportCSV(int[] digitOccurrences){
         
+		//Defines variables
         double digitPercentage = 0;
     	double frequencyOfDigitOne = 0;
 
@@ -144,29 +200,26 @@ class BenLaw{
             File outFile = new File("results.csv");
             PrintWriter out = new PrintWriter(outFile);
 
-            
+            //Generates the CSV
             if(outFile.exists()){
                 
+				//Prints the reuslts
                 for (int i = 1; i < digitOccurrences.length; i++){	
-                    digitPercentage = Math.round(((double)(digitOccurrences[i])/(double)(digitOccurrences[0])) * 1000) / 10.0;
+                    digitPercentage = Math.round(((double)(digitOccurrences[i])/(double)(digitOccurrences[0])) * 1000) / 10.0;         
                     
-                    out.println(i + " occurred " + digitPercentage + "% of the time."); //
-                    
+					out.println(i + " occurred " + digitPercentage + "% of the time.");        
                     if (i == 1){
                         frequencyOfDigitOne = digitPercentage;
                     }
                 }
-            }
-            
+            }    
             System.out.println("Your information can now be found in 'results.csv'.");
             System.out.println(); // Spacing
-
             out.close();
         }
 
         catch(FileNotFoundException e){
             System.out.println(e);
         }
-
     }
 }
