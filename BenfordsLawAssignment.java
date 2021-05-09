@@ -6,13 +6,25 @@
 * and check the sales data for possible accounting fraud
 */
 
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.chart.*;
+import javafx.scene.Group;
+
+
 import java.util.Scanner;	//Library for the scanner
 import java.io.*;
 import java.io.PrintWriter;
 
-class BenLaw{
+
+public class BenfordsLawAssignment extends Application {
     
     public static void main(String[] args){
+
+		
 
     	Scanner reader = new Scanner(System.in);
     
@@ -44,7 +56,9 @@ class BenLaw{
 
 			//Executes the exportCSV method
             else if(userInput.equals("3")){
+				launch(args);
     			exportCSV(digitOccurrences);
+
     		}
 
 			//Detects invalid input; prompts re-input from the user
@@ -77,13 +91,13 @@ class BenLaw{
 	* Loads the sales.csv file
 	* 
 	* @param - int type array
-	* @return - the digit occurances of each number (1-9)
+	* @return - the digit occurrences of each number (1-9)
 	* @Author - Krishna & Elaine
 	*/
 
     public static int[] loadFile(int[] digitOccurrences){	
 
-		//Saves digit occurances
+		//Saves digit occurrences
     	for (int i = 0; i < digitOccurrences.length; i++){
     		digitOccurrences[i] = 0;
     	}
@@ -183,7 +197,7 @@ class BenLaw{
     }
 
 	/*
-	* Exports the digit occurances as a CSV
+	* Exports the digit occurrences as a CSV
 	* 
 	* @param - int type array
 	* @return - void type method; does not return a value
@@ -221,5 +235,35 @@ class BenLaw{
         catch(FileNotFoundException e){
             System.out.println(e);
         }
+    }
+
+
+	@Override public void start(Stage stage) {
+
+        Scene scene = new Scene(new Group());
+        stage.setTitle("Digit occurrences pie chart");
+        stage.setWidth(500);
+        stage.setHeight(500);
+ 
+        ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+
+                new PieChart.Data("digit 1", 31.5),
+                new PieChart.Data("digit 2", 13.8),
+                new PieChart.Data("digit 3", 12.7),
+                new PieChart.Data("digit 4", 11.0),
+				new PieChart.Data("digit 5", 9.0),
+                new PieChart.Data("digit 6", 6.8),
+				new PieChart.Data("digit 7", 5.7),
+				new PieChart.Data("digit 8", 4.3),
+				new PieChart.Data("digit 9", 5.2));
+
+
+        final PieChart chart = new PieChart(pieChartData);
+        chart.setTitle("Digit occurrences pie chart");
+
+        ((Group) scene.getRoot()).getChildren().add(chart);
+        stage.setScene(scene);
+        stage.show();
     }
 }
