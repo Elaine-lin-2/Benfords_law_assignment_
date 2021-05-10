@@ -8,12 +8,13 @@
 
 //import Java APIs
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
-import javafx.scene.chart.*;
-import javafx.scene.Group;
+
 import java.util.Scanner;	
 import java.io.*;
 import java.io.PrintWriter;
@@ -231,31 +232,31 @@ public class BenfordsLawAssignment extends Application {
     }
 	
 	@Override public void start(Stage stage) {
+        stage.setTitle("Digit Occurrences Pie Chart");
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        final BarChart<String,Number> bc = 
+            new BarChart<String,Number>(xAxis,yAxis);
+        bc.setTitle("Digit Occurrences Pie Chart");
+        xAxis.setLabel("Digits (1-9)");
+        yAxis.setLabel("Digit occurences (%)");
 
-        Scene scene = new Scene(new Group());
-        stage.setTitle("Digit occurrences pie chart");
-        stage.setWidth(500);
-        stage.setHeight(500);
- 
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
+        XYChart.Series series1 = new XYChart.Series();  
+		series1.setName("Digit Occurences");
 
-				new PieChart.Data("digit 1", 31.5),
-                new PieChart.Data("digit 2", 13.8),
-                new PieChart.Data("digit 3", 12.7),
-                new PieChart.Data("digit 4", 11.0),
-				new PieChart.Data("digit 5", 9.0),
-                new PieChart.Data("digit 6", 6.8),
-				new PieChart.Data("digit 7", 5.7),
-				new PieChart.Data("digit 8", 4.3),
-				new PieChart.Data("digit 9", 5.2));
-
-        final PieChart chart = new PieChart(pieChartData);
-        chart.setTitle("Digit occurrences pie chart");
-
-        ((Group) scene.getRoot()).getChildren().add(chart);
+        series1.getData().add(new XYChart.Data("digit 1", 31.5));
+        series1.getData().add(new XYChart.Data("digit 2", 13.8));
+        series1.getData().add(new XYChart.Data("digit 3", 12.7));
+        series1.getData().add(new XYChart.Data("digit 4", 11.0));
+        series1.getData().add(new XYChart.Data("digit 5", 9.0));      
+		series1.getData().add(new XYChart.Data("digit 6", 6.8));
+		series1.getData().add(new XYChart.Data("digit 7", 5.7));
+		series1.getData().add(new XYChart.Data("digit 8", 4.3));
+		series1.getData().add(new XYChart.Data("digit 9", 5.2));
+        
+        Scene scene  = new Scene(bc,800,600);
+        bc.getData().addAll(series1);
         stage.setScene(scene);
         stage.show();
     }
-	
 }
