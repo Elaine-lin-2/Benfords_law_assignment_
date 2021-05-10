@@ -170,7 +170,7 @@ public class BenfordsLawAssignment extends Application {
 
 			//Calculates the percentage
     		digitPercentage = Math.round(((double)(digitOccurrences[i])/(double)(digitOccurrences[0])) * 1000) / 10.0;
-    		//System.out.println(i + " occurred " + digitPercentage + "% of the time.");
+    		System.out.println(i + " occurred " + digitPercentage + "% of the time.");
     		if (i == 1){
 
 				//
