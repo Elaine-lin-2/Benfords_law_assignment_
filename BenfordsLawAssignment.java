@@ -257,6 +257,33 @@ public class BenfordsLawAssignment extends Application {
         Scene scene  = new Scene(bc,800,600);
         bc.getData().addAll(series1);
         stage.setScene(scene);
-        stage.show();
+        stage.show();}
+
+		@Override public void start(Stage stage) {
+
+			Scene scene = new Scene(new Group());
+			stage.setTitle("Digit occurrences pie chart");
+			stage.setWidth(500);
+			stage.setHeight(500);
+	 
+			ObservableList<PieChart.Data> pieChartData =
+					FXCollections.observableArrayList(
+	
+					new PieChart.Data("digit 1", 31.5),
+					new PieChart.Data("digit 2", 13.8),
+					new PieChart.Data("digit 3", 12.7),
+					new PieChart.Data("digit 4", 11.0),
+					new PieChart.Data("digit 5", 9.0),
+					new PieChart.Data("digit 6", 6.8),
+					new PieChart.Data("digit 7", 5.7),
+					new PieChart.Data("digit 8", 4.3),
+					new PieChart.Data("digit 9", 5.2));
+	
+			final PieChart chart = new PieChart(pieChartData);
+			chart.setTitle("Digit occurrences pie chart");
+	
+			((Group) scene.getRoot()).getChildren().add(chart);
+			stage.setScene(scene);
+			stage.show();
     }
 }
