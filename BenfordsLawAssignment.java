@@ -6,6 +6,7 @@
 * and check the sales data for possible accounting fraud
 */
 
+//import Java APIs
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,19 +14,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.chart.*;
 import javafx.scene.Group;
-
-
-import java.util.Scanner;	//Library for the scanner
+import java.util.Scanner;	
 import java.io.*;
 import java.io.PrintWriter;
-
 
 public class BenfordsLawAssignment extends Application {
     
     public static void main(String[] args){
-
-		
-
     	Scanner reader = new Scanner(System.in);
     
 		//Generate new int-type array
@@ -56,17 +51,15 @@ public class BenfordsLawAssignment extends Application {
 
 			//Executes the exportCSV method
             else if(userInput.equals("3")){
-				launch(args);
     			exportCSV(digitOccurrences);
-
+				launch(args);
+				System.exit(0);
     		}
-
+			
 			//Detects invalid input; prompts re-input from the user
             else{
                 System.out.println("Please type in a valid option (A number from 0-3)");
             }
-    	
-		
 		//Exit conditions
     	} while (true);	
     }
@@ -226,7 +219,7 @@ public class BenfordsLawAssignment extends Application {
                         frequencyOfDigitOne = digitPercentage;
                     }
                 }
-            }    
+            }
             System.out.println("Your information can now be found in 'results.csv'.");
             System.out.println(); // Spacing
             out.close();
@@ -236,8 +229,7 @@ public class BenfordsLawAssignment extends Application {
             System.out.println(e);
         }
     }
-
-
+	
 	@Override public void start(Stage stage) {
 
         Scene scene = new Scene(new Group());
@@ -248,7 +240,7 @@ public class BenfordsLawAssignment extends Application {
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
 
-                new PieChart.Data("digit 1", 31.5),
+				new PieChart.Data("digit 1", 31.5),
                 new PieChart.Data("digit 2", 13.8),
                 new PieChart.Data("digit 3", 12.7),
                 new PieChart.Data("digit 4", 11.0),
@@ -258,7 +250,6 @@ public class BenfordsLawAssignment extends Application {
 				new PieChart.Data("digit 8", 4.3),
 				new PieChart.Data("digit 9", 5.2));
 
-
         final PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Digit occurrences pie chart");
 
@@ -266,4 +257,5 @@ public class BenfordsLawAssignment extends Application {
         stage.setScene(scene);
         stage.show();
     }
+	
 }
