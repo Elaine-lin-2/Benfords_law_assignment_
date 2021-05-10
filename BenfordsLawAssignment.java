@@ -62,7 +62,7 @@ public class BenfordsLawAssignment extends Application {
                 System.out.println("Please type in a valid option (A number from 0-3)");
             }
 		//Exit conditions
-    	} while (true);	
+    	} while (true);
     }
     
 	/*
@@ -122,7 +122,7 @@ public class BenfordsLawAssignment extends Application {
                         firstDigitInt = Character.getNumericValue(firstDigitString);
                     }
                 }
-				//
+				
 				digitOccurrences[firstDigitInt]++;
     			digitOccurrences[0]++;
             }
@@ -231,13 +231,15 @@ public class BenfordsLawAssignment extends Application {
         }
     }
 	
-	@Override public void start(Stage stage) {
-        stage.setTitle("Digit Occurrences Pie Chart");
+	@Override public void start(Stage stage){
+
+        stage.setTitle("Digit Occurrences Bar Graph");
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
         final BarChart<String,Number> bc = 
-            new BarChart<String,Number>(xAxis,yAxis);
-        bc.setTitle("Digit Occurrences Pie Chart");
+        new BarChart<String,Number>(xAxis,yAxis);
+
+        bc.setTitle("Digit Occurrences Bar Graph");
         xAxis.setLabel("Digits (1-9)");
         yAxis.setLabel("Digit occurences (%)");
 
@@ -257,33 +259,9 @@ public class BenfordsLawAssignment extends Application {
         Scene scene  = new Scene(bc,800,600);
         bc.getData().addAll(series1);
         stage.setScene(scene);
-        stage.show();}
+        stage.show();
 
-		@Override public void middle(Stage stage) {
-
-			Scene scene = new Scene(new Group());
-			stage.setTitle("Digit occurrences pie chart");
-			stage.setWidth(500);
-			stage.setHeight(500);
-	 
-			ObservableList<PieChart.Data> pieChartData =
-					FXCollections.observableArrayList(
-	
-					new PieChart.Data("digit 1", 31.5),
-					new PieChart.Data("digit 2", 13.8),
-					new PieChart.Data("digit 3", 12.7),
-					new PieChart.Data("digit 4", 11.0),
-					new PieChart.Data("digit 5", 9.0),
-					new PieChart.Data("digit 6", 6.8),
-					new PieChart.Data("digit 7", 5.7),
-					new PieChart.Data("digit 8", 4.3),
-					new PieChart.Data("digit 9", 5.2));
-	
-			final PieChart chart = new PieChart(pieChartData);
-			chart.setTitle("Digit occurrences pie chart");
-	
-			((Group) scene.getRoot()).getChildren().add(chart);
-			stage.setScene(scene);
-			stage.show();
     }
+
+
 }
