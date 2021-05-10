@@ -259,7 +259,7 @@ public class BenfordsLawAssignment extends Application {
         stage.setScene(scene);
         stage.show();}
 
-		@Override public void start(Stage stage) {
+		@Override public void middle(Stage stage) {
 
 			Scene scene = new Scene(new Group());
 			stage.setTitle("Digit occurrences pie chart");
