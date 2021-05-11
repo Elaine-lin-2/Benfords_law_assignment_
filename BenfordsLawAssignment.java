@@ -181,6 +181,7 @@ public class BenfordsLawAssignment extends ApplicationFrame {
     		System.out.println(i + " occurred " + digitPercentage + "% of the time.");
     		if (i == 1){
 
+				//keeping track of the variable
     			frequencyOfDigitOne = digitPercentage;
     		}
     	}
@@ -234,6 +235,28 @@ public class BenfordsLawAssignment extends ApplicationFrame {
     }
 
 	/*
+	* Generate the dataset for the bar graph
+	* 
+	* @param - int type array
+	* @return - method does not return a value
+	* @Author - Elaine
+	*/
+	public CategoryDataset createDataset(int[] digitOccurrences){
+	
+		double digitPercentage =0;
+		//Create a new dataset
+		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
+  
+		//Call array and import data into the graph
+		for(int i=1; i<digitOccurrences.length;i++){
+			digitPercentage = Math.round(((double)(digitOccurrences[i])/(double)(digitOccurrences[0])) * 1000) / 10.0;
+			dataset.addValue(digitPercentage, "digitOccurences" , "digit " + i);
+		}
+		
+		return dataset; 
+	}
+	
+	/*
 	* Generate visual representation
 	* 
 	* @param - application title, visual title, int type array
@@ -260,25 +283,5 @@ public class BenfordsLawAssignment extends ApplicationFrame {
 		setContentPane(chartPanel); 
 	}
 
-	/*
-	* Generate the dataset for the bar graph
-	* 
-	* @param - int type array
-	* @return - method does not return a value
-	* @Author - Elaine
-	*/
-	public CategoryDataset createDataset(int[] digitOccurrences){
 	
-		double digitPercentage =0;
-		//Create a new dataset
-		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
-  
-		//Call array and import data into the graph
-		for(int i=1; i<digitOccurrences.length;i++){
-			digitPercentage = Math.round(((double)(digitOccurrences[i])/(double)(digitOccurrences[0])) * 1000) / 10.0;
-			dataset.addValue(digitPercentage, "digitOccurences" , "digit " + i);
-		}
-		
-		return dataset; 
-	}
 }
