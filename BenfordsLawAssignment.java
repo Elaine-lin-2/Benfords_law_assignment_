@@ -6,7 +6,7 @@
 * and check the sales data for possible accounting fraud
 */
 
-//import Java APIs
+//import jFreeChart applictions
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel; 
 import org.jfree.chart.JFreeChart; 
@@ -16,6 +16,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame; 
 import org.jfree.ui.RefineryUtilities; 
 
+//Import other neccessary APIs
 import java.util.Scanner;	
 import java.io.*;
 import java.io.PrintWriter;
@@ -55,17 +56,19 @@ public class BenfordsLawAssignment extends ApplicationFrame {
 			//Executes the exportCSV method
             else if(userInput.equals("3")){
     			exportCSV(digitOccurrences);
+
+				//Open and run the jFreeChart application
 				BenfordsLawAssignment chart = new BenfordsLawAssignment("Digit Occurrences", "Digit Occurrences", digitOccurrences);
 				chart.pack();
 				RefineryUtilities.centerFrameOnScreen(chart);
 				chart.setVisible(true);
-				//System.exit(0);
     		}
 			
 			//Detects invalid input; prompts re-input from the user
             else{
                 System.out.println("Please type in a valid option (A number from 0-3)");
             }
+
 		//Exit conditions
     	} while (true);
     }
@@ -77,7 +80,6 @@ public class BenfordsLawAssignment extends ApplicationFrame {
 	* @return - is void type method; does not return a value
 	* @Author - Krishna & Elaine
 	*/
-
     public static void printMenu(){
 
 		//Prints user options
@@ -86,7 +88,6 @@ public class BenfordsLawAssignment extends ApplicationFrame {
         System.out.println("press <3> to print the results in a CSV file and generate visual representation");
     }
 
-
 	/*
 	* Loads the sales.csv file
 	* 
@@ -94,7 +95,6 @@ public class BenfordsLawAssignment extends ApplicationFrame {
 	* @return - the digit occurrences of each number (1-9)
 	* @Author - Krishna & Elaine
 	*/
-	
     public static int[] loadFile(int[] digitOccurrences){	
 
 		//Saves digit occurrences
@@ -102,7 +102,7 @@ public class BenfordsLawAssignment extends ApplicationFrame {
     		digitOccurrences[i] = 0;
     	}
 
-		//Define variables
+		//Define the variables
 		int len;
         String fileName = "sales.csv";
 		
@@ -128,6 +128,8 @@ public class BenfordsLawAssignment extends ApplicationFrame {
                         firstDigitInt = Character.getNumericValue(firstDigitString);
                     }
                 }
+
+				//keep tract of digit occurrences
 				digitOccurrences[firstDigitInt]++;
     			digitOccurrences[0]++;
             }
@@ -159,7 +161,6 @@ public class BenfordsLawAssignment extends ApplicationFrame {
 	* @return - the result of the validation (true /false statement)
 	* @Author - Krishna
 	*/
-
     public static boolean checkSalesData(int[] digitOccurrences){
     	
 		//Define variables
@@ -204,7 +205,6 @@ public class BenfordsLawAssignment extends ApplicationFrame {
 	* @return - void type method; does not return a value
 	* @Author - Elaine
 	*/
-
     public static void exportCSV(int[] digitOccurrences){
         
 		//Defines variables
@@ -219,7 +219,8 @@ public class BenfordsLawAssignment extends ApplicationFrame {
             if(outFile.exists()){
                 
 				//Prints the reuslts
-                for (int i = 1; i < digitOccurrences.length; i++){	
+                for (int i = 1; i < digitOccurrences.length; i++){
+					
                     digitPercentage = Math.round(((double)(digitOccurrences[i])/(double)(digitOccurrences[0])) * 1000) / 10.0;         
                     
 					out.println(i + " occurred " + digitPercentage + "% of the time.");        
@@ -227,8 +228,8 @@ public class BenfordsLawAssignment extends ApplicationFrame {
                         frequencyOfDigitOne = digitPercentage;
                     }
                 }
+				System.out.println("Your information can now be found in 'results.csv'.");
             }
-            System.out.println("Your information can now be found in 'results.csv'.");
             System.out.println(); // Spacing
             out.close();
         }
@@ -239,74 +240,51 @@ public class BenfordsLawAssignment extends ApplicationFrame {
     }
 
 	/*
-	@Override public void start(Stage stage){
-
-        stage.setTitle("Digit Occurrences Bar Graph");
-        final CategoryAxis xAxis = new CategoryAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        final BarChart<String,Number> bc = 
-        new BarChart<String,Number>(xAxis,yAxis);
-
-        bc.setTitle("Digit Occurrences Bar Graph");
-        xAxis.setLabel("Digits (1-9)");
-        yAxis.setLabel("Digit occurences (%)");
-
-        XYChart.Series series1 = new XYChart.Series();  
-		series1.setName("Digit Occurences");
-
-        series1.getData().add(new XYChart.Data("digit 1", 31.5));
-        series1.getData().add(new XYChart.Data("digit 2", 13.8));
-        series1.getData().add(new XYChart.Data("digit 3", 12.7));
-        series1.getData().add(new XYChart.Data("digit 4", 11.0));
-        series1.getData().add(new XYChart.Data("digit 5", 9.0));      
-		series1.getData().add(new XYChart.Data("digit 6", 6.8));
-		series1.getData().add(new XYChart.Data("digit 7", 5.7));
-		series1.getData().add(new XYChart.Data("digit 8", 4.3));
-		series1.getData().add(new XYChart.Data("digit 9", 5.2));
-		
-        Scene scene  = new Scene(bc,800,600);
-        bc.getData().addAll(series1);
-        stage.setScene(scene);
-        stage.show();
-		
-    }
+	* Generate visual representation
+	* 
+	* @param - application title, visual title, int type array
+	* @return - method does not return a value
+	* @Author - Elaine
 	*/
 	public BenfordsLawAssignment(String applicationTitle,String chartTitle, int[] digitOccurrences) {
 		super(applicationTitle);        
 		JFreeChart barChart = ChartFactory.createBarChart(
-		   chartTitle,
-		   "Digit occurences",            
-		   "Digits (1-9)",            
-		   createDataset(digitOccurrences),
-		   PlotOrientation.VERTICAL,           
-		   true, true, false);
-		   
+
+		//Set chart title
+		chartTitle,
+		"Digit occurences",
+		"Digits (1-9)",
+		createDataset(digitOccurrences),
+		PlotOrientation.VERTICAL,           
+		true, true, false);
+		
+		//Generate bar graph
 		ChartPanel chartPanel = new ChartPanel(barChart);        
+
+		//Set the dimensions
 		chartPanel.setPreferredSize(new java.awt.Dimension(560,367));        
 		setContentPane(chartPanel); 
-	 }
+	}
 
-	 private CategoryDataset createDataset(int[] digitOccurrences){
+	/*
+	* Generate the dataset for the bar graph
+	* 
+	* @param - int type array
+	* @return - method does not return a value
+	* @Author - Elaine
+	*/
+	public CategoryDataset createDataset(int[] digitOccurrences){
 	
+		double digitPercentage =0;
+		//Create a new dataset
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
   
+		//Call array and import data into the graph
 		for(int i=1; i<digitOccurrences.length;i++){
-			dataset.addValue(digitOccurrences[i], "digitOccurences" , "digit " + i);
+			digitPercentage = Math.round(((double)(digitOccurrences[i])/(double)(digitOccurrences[0])) * 1000) / 10.0;
+			dataset.addValue(digitPercentage, "digitOccurences" , "digit " + i);
 		}
-		  
-		/*
-		dataset.addValue( 13.8 , "digitOccurences" , "digit 2" );
-		dataset.addValue( 12.7, "digitOccurences" , "digit 3" );
-		dataset.addValue( 11.0 , "digitOccurences" , "digit 4" );
-		dataset.addValue( 9.0 , "digitOccurences" , "digit 5" );
-		dataset.addValue( 6.8 , "digitOccurences" , "digit 6" );
-		dataset.addValue( 5.7 , "digitOccurences" , "digit 7" );
-		dataset.addValue( 4.3 , "digitOccurences" , "digit 8" );
-		dataset.addValue( 5.2 , "digitOccurences" , "digit 9" );
-		*/
-
+		
 		return dataset; 
-	 }
-
-	
+	}
 }
