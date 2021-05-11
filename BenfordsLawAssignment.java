@@ -58,7 +58,7 @@ public class BenfordsLawAssignment extends ApplicationFrame {
     			exportCSV(digitOccurrences);
 
 				//Open and run the jFreeChart application
-				BenfordsLawAssignment chart = new BenfordsLawAssignment("Digit Occurrences", "Digit Occurrences", digitOccurrences);
+				BenfordsLawAssignment chart = new BenfordsLawAssignment("Digit Occurrences Percentages Bar Graph", "Digit Occurrence Percentages Bar Graph", digitOccurrences);
 				chart.pack();
 				RefineryUtilities.centerFrameOnScreen(chart);
 				chart.setVisible(true);
