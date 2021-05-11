@@ -269,7 +269,7 @@ public class BenfordsLawAssignment extends ApplicationFrame {
 
 		//Set chart title
 		chartTitle,
-		"Digit Ocurences Percentage",
+		"Digit Occurrences Percentage",
 		"Digits (1-9)",
 		createDataset(digitOccurrences),
 		PlotOrientation.VERTICAL,           
