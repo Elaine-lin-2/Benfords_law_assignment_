@@ -7,25 +7,27 @@
 */
 
 //import Java APIs
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.stage.Stage;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel; 
+import org.jfree.chart.JFreeChart; 
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset; 
+import org.jfree.data.category.DefaultCategoryDataset; 
+import org.jfree.ui.ApplicationFrame; 
+import org.jfree.ui.RefineryUtilities; 
 
 import java.util.Scanner;	
 import java.io.*;
 import java.io.PrintWriter;
 
-public class BenfordsLawAssignment extends Application {
-    
+
+public class BenfordsLawAssignment extends ApplicationFrame {
     public static void main(String[] args){
     	Scanner reader = new Scanner(System.in);
     
 		//Generate new int-type array
     	int[] digitOccurrences = new int[10];
+		
     	boolean isThereFraud = false;
     	
     	do{
@@ -53,8 +55,11 @@ public class BenfordsLawAssignment extends Application {
 			//Executes the exportCSV method
             else if(userInput.equals("3")){
     			exportCSV(digitOccurrences);
-				launch(args);
-				System.exit(0);
+				BenfordsLawAssignment chart = new BenfordsLawAssignment("Digit Occurrences", "Digit Occurrences", digitOccurrences);
+				chart.pack();
+				RefineryUtilities.centerFrameOnScreen(chart);
+				chart.setVisible(true);
+				//System.exit(0);
     		}
 			
 			//Detects invalid input; prompts re-input from the user
@@ -78,8 +83,9 @@ public class BenfordsLawAssignment extends Application {
 		//Prints user options
         System.out.println("Press <1> to load the file");
         System.out.println("press <2> to check for accounting fraud");
-        System.out.println("press <3> to print the results in a CSV file");
+        System.out.println("press <3> to print the results in a CSV file and generate visual representation");
     }
+
 
 	/*
 	* Loads the sales.csv file
@@ -88,7 +94,7 @@ public class BenfordsLawAssignment extends Application {
 	* @return - the digit occurrences of each number (1-9)
 	* @Author - Krishna & Elaine
 	*/
-
+	
     public static int[] loadFile(int[] digitOccurrences){	
 
 		//Saves digit occurrences
@@ -122,10 +128,10 @@ public class BenfordsLawAssignment extends Application {
                         firstDigitInt = Character.getNumericValue(firstDigitString);
                     }
                 }
-				
 				digitOccurrences[firstDigitInt]++;
     			digitOccurrences[0]++;
             }
+			
 
 			/*
     		while(fileReader.hasNextLine() == true){
@@ -138,13 +144,14 @@ public class BenfordsLawAssignment extends Application {
     			digitOccurrences[0]++;
     		}
 			*/
+
     	}
     	catch(FileNotFoundException e){
     		System.out.println(e);
     	}
     	return digitOccurrences;
     }
-    
+	
 	/*
 	* Checks and varifies the Sales Data
 	* 
@@ -230,7 +237,8 @@ public class BenfordsLawAssignment extends Application {
             System.out.println(e);
         }
     }
-	
+
+	/*
 	@Override public void start(Stage stage){
 
         stage.setTitle("Digit Occurrences Bar Graph");
@@ -255,13 +263,50 @@ public class BenfordsLawAssignment extends Application {
 		series1.getData().add(new XYChart.Data("digit 7", 5.7));
 		series1.getData().add(new XYChart.Data("digit 8", 4.3));
 		series1.getData().add(new XYChart.Data("digit 9", 5.2));
-        
+		
         Scene scene  = new Scene(bc,800,600);
         bc.getData().addAll(series1);
         stage.setScene(scene);
         stage.show();
-
+		
     }
+	*/
+	public BenfordsLawAssignment(String applicationTitle,String chartTitle, int[] digitOccurrences) {
+		super(applicationTitle);        
+		JFreeChart barChart = ChartFactory.createBarChart(
+		   chartTitle,
+		   "Digit occurences",            
+		   "Digits (1-9)",            
+		   createDataset(digitOccurrences),
+		   PlotOrientation.VERTICAL,           
+		   true, true, false);
+		   
+		ChartPanel chartPanel = new ChartPanel(barChart);        
+		chartPanel.setPreferredSize(new java.awt.Dimension(560,367));        
+		setContentPane(chartPanel); 
+	 }
 
+	 private CategoryDataset createDataset(int[] digitOccurrences){
+	
+		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
+  
+		for(int i=1; i<digitOccurrences.length;i++){
+			dataset.addValue(digitOccurrences[i], "digitOccurences" , "digit " + i);
+		}
+		  
+		/*
+		dataset.addValue( 13.8 , "digitOccurences" , "digit 2" );
+		dataset.addValue( 12.7, "digitOccurences" , "digit 3" );
+		dataset.addValue( 11.0 , "digitOccurences" , "digit 4" );
+		dataset.addValue( 9.0 , "digitOccurences" , "digit 5" );
+		dataset.addValue( 6.8 , "digitOccurences" , "digit 6" );
+		dataset.addValue( 5.7 , "digitOccurences" , "digit 7" );
+		dataset.addValue( 4.3 , "digitOccurences" , "digit 8" );
+		dataset.addValue( 5.2 , "digitOccurences" , "digit 9" );
+		*/
 
+		return dataset; 
+	 }
+
+	
 }
