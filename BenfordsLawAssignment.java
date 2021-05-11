@@ -181,7 +181,6 @@ public class BenfordsLawAssignment extends ApplicationFrame {
     		System.out.println(i + " occurred " + digitPercentage + "% of the time.");
     		if (i == 1){
 
-				//
     			frequencyOfDigitOne = digitPercentage;
     		}
     	}
@@ -209,7 +208,6 @@ public class BenfordsLawAssignment extends ApplicationFrame {
         
 		//Defines variables
         double digitPercentage = 0;
-    	double frequencyOfDigitOne = 0;
 
         try{
             File outFile = new File("results.csv");
@@ -222,11 +220,7 @@ public class BenfordsLawAssignment extends ApplicationFrame {
                 for (int i = 1; i < digitOccurrences.length; i++){
 					
                     digitPercentage = Math.round(((double)(digitOccurrences[i])/(double)(digitOccurrences[0])) * 1000) / 10.0;         
-                    
 					out.println(i + " occurred " + digitPercentage + "% of the time.");        
-                    if (i == 1){
-                        frequencyOfDigitOne = digitPercentage;
-                    }
                 }
 				System.out.println("Your information can now be found in 'results.csv'.");
             }
