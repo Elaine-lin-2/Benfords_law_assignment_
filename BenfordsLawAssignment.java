@@ -255,7 +255,7 @@ public class BenfordsLawAssignment extends ApplicationFrame {
 		
 		return dataset; 
 	}
-	
+
 	/*
 	* Generate visual representation
 	* 
@@ -269,7 +269,7 @@ public class BenfordsLawAssignment extends ApplicationFrame {
 
 		//Set chart title
 		chartTitle,
-		"Digit occurences",
+		"Digit Ocurences Percentage",
 		"Digits (1-9)",
 		createDataset(digitOccurrences),
 		PlotOrientation.VERTICAL,           
@@ -282,6 +282,4 @@ public class BenfordsLawAssignment extends ApplicationFrame {
 		chartPanel.setPreferredSize(new java.awt.Dimension(560,367));        
 		setContentPane(chartPanel); 
 	}
-
-	
 }
