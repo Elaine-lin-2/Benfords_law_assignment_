@@ -66,7 +66,7 @@ public class BenfordsLawAssignment extends ApplicationFrame {
 			
 			//Detects invalid input; prompts re-input from the user
             else{
-                System.out.println("Please type in a valid option (A number from 0-3)");
+                System.out.println("Please type in a valid option (A number from 1-3)");
             }
 
 		//Exit conditions
@@ -133,19 +133,6 @@ public class BenfordsLawAssignment extends ApplicationFrame {
 				digitOccurrences[firstDigitInt]++;
     			digitOccurrences[0]++;
             }
-			
-
-			/*
-    		while(fileReader.hasNextLine() == true){
-
-    			fileLine = fileReader.nextLine();
-    			firstDigitString = fileLine.substring(fileLine.indexOf(",") + 1, fileLine.indexOf(",") + 2);
-    			
-    			firstDigitInt = Integer.parseInt(firstDigitString);
-    			digitOccurrences[firstDigitInt]++;
-    			digitOccurrences[0]++;
-    		}
-			*/
 
     	}
     	catch(FileNotFoundException e){
@@ -167,11 +154,11 @@ public class BenfordsLawAssignment extends ApplicationFrame {
         double digitPercentage = 0;
     	double frequencyOfDigitOne = 0;   
     	
-    	/*
+    	
         for (int i = 1; i < digitOccurrences.length; i++){
     		System.out.println(i + " appeared " + digitOccurrences[i] + " times.");
     	}
-		*/
+		
 
 		//Iterates the array
     	for (int i = 1; i < digitOccurrences.length; i++){	
