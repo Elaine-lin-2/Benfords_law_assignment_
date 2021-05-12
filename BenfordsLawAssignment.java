@@ -2,8 +2,16 @@
 * Date: May 5, 2021
 * Names: Krishna & Elaine
 * Teacher: Mr.Ho
-* Description: The program allows the user to read the file containing the total sales amount
-* and check the sales data for possible accounting fraud
+*
+* Description: 
+* 
+* The program allows the user to read the file containing the total sales amount
+* and check the sales data for possible accounting fraud.
+*
+* It does this by finding the percentage of first digit occurences for each number from 1 to 9. 
+*
+* It then outputs the numbers and percentages, generates a bar graph and creates a CSV file with the results.
+* 
 */
 
 //import jFreeChart applictions
@@ -68,9 +76,9 @@ public class BenfordsLawAssignment extends ApplicationFrame {
             else{
                 System.out.println("Please type in a valid option (A number from 1-3)");
             }
-
+			 
 		//Exit conditions
-    	} while (true);
+    	} while (true);	
     }
     
 	/*
@@ -129,7 +137,7 @@ public class BenfordsLawAssignment extends ApplicationFrame {
                     }
                 }
 
-				//keep tract of digit occurrences
+				//keeps track of digit occurrences
 				digitOccurrences[firstDigitInt]++;
     			digitOccurrences[0]++;
             }
@@ -168,7 +176,7 @@ public class BenfordsLawAssignment extends ApplicationFrame {
     		System.out.println(i + " occurred " + digitPercentage + "% of the time.");
     		if (i == 1){
 
-				//keeping track of the variable
+				//Saves digit percentage for digit 1 in variable frequencyOfDigitOne
     			frequencyOfDigitOne = digitPercentage;
     		}
     	}
