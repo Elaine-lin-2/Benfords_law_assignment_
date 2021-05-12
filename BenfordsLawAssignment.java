@@ -154,11 +154,11 @@ public class BenfordsLawAssignment extends ApplicationFrame {
         double digitPercentage = 0;
     	double frequencyOfDigitOne = 0;   
     	
-    	
+    	/*
         for (int i = 1; i < digitOccurrences.length; i++){
     		System.out.println(i + " appeared " + digitOccurrences[i] + " times.");
     	}
-		
+		*/
 
 		//Iterates the array
     	for (int i = 1; i < digitOccurrences.length; i++){	
